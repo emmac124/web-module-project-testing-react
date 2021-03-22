@@ -1,15 +1,38 @@
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Display from './../Display';
 
+const testEpisode = [{
+    id:1,
+    name: "",
+    image: "http://static.tvmaze.com/uploads/images/medium_landscape/67/168918.jpg",
+    season: 1,
+    number: 1,
+    summary: "",
+    runtime: 1
+}];
 
+test("renders without errors", () => {
+    render(<Display />);
+});
 
+test("fetch button is pressed as show component will be displayed", async () => {
+    render(<Display displayFun={testEpisode} />);
 
+    const button = await screen.findByRole("button");
+    userEvent.click(button);
 
+    expect(testEpisode).toHaveLength(1);
+});
 
+test("when fetch button is pressed, the amount of select options rendered is equal to the amout of seasons", async () => {
+    render(<Display displayFun={testEpisode} />);
 
-
-
-
-
-
+    const button = await screen.findByRole("button");
+    userEvent.click(button);
+    expect(testEpisode.season === 1);
+});
 
 
 
